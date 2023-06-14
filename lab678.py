@@ -72,6 +72,28 @@ def yml_wczytaj(plik_yml):
     else:
         return False
         
+
+def yml_zapisz(obiekt, typ_obiektu):
+    if typ_obiektu == "json":
+        try:
+            dane_yml = yaml.dump(obiekt)
+            return dane_yml
+        except Exception as e:
+            print("Wystąpił błąd podczas przetwarzania JSON:", e)
+    elif typ_obiektu == "xml":
+        try:
+            dane_xml = xmltodict.parse(obiekt)
+            dane_yml = yaml.dump(dane_xml)
+            return dane_yml
+        except Exception as e:
+            print("Wystąpił błąd podczas przetwarzania XML:", e)
+    elif typ_obiektu == "yml" or typ_obiektu == "yaml":
+        try:
+            dane_yml = yaml.dump(obiekt)
+            return dane_yml
+        except Exception as e:
+            print("Wystąpił błąd podczas przetwarzania YAML:", e)
+        
 arg_parser = argparse.ArgumentParser(
     prog='Konwerter Konfiguracji',
     description='Konwertuje pliki konfiguracyjne w formatach xml, json i yml(yaml)')
@@ -121,5 +143,14 @@ else:
             dane_json = json_zapisz(obiekt_xml, typ_pliku_1)
             with open(plik_2.name, "w") as plik_json:
                 plik_json.write(dane_json)
+    elif typ_pliku_2 == "yaml" or typ_pliku_2 == "yml":
+        if typ_pliku_1 == "json":
+            dane_yml = yml_zapisz(obiekt_json, typ_pliku_1)
+            with open(plik_2.name, "w") as plik_yml:
+                plik_yml.write(dane_yml)
+        elif typ_pliku_1 == "xml":
+            dane_yml = yml_zapisz(obiekt_xml, typ_pliku_1)
+            with open(plik_2.name, "w") as plik_yml:
+                plik_yml.write(dane_yml)
 
 print("Konwersja zakończona")
