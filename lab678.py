@@ -1,5 +1,6 @@
 import argparse
 import json
+import yaml
 
 def sprawdz(plik, typ_pliku):
     if typ_pliku == "json":
