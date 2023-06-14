@@ -2,6 +2,7 @@ import argparse
 import json
 import yaml
 import xmltodict
+import os
 
 def sprawdz(plik, typ_pliku):
     if typ_pliku == "json":
@@ -161,12 +162,12 @@ if plik_2_istnieje:
 else:
     with open(sciezka_pliku_1, "r") as plik_1:
         if typ_pliku_1 == "json":
-			obiekt_json = json_wczytaj(plik_1)
-		elif typ_pliku_1 == "yml" or typ_pliku_1 == "yaml":
+            obiekt_json = json_wczytaj(plik_1)
+        elif typ_pliku_1 == "yml" or typ_pliku_1 == "yaml":
             obiekt_yml = yml_wczytaj(plik_1)
         elif typ_pliku_1 == "xml":
             obiekt_xml = xml_wczytaj(plik_1)
-		else:
+        else:
             obiekt_json = None
             obiekt_yml = None
             obiekt_xml = None
