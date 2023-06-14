@@ -61,6 +61,17 @@ def json_zapisz(obiekt, typ_obiektu):
         except Exception as e:
             print("Wystąpił błąd podczas przetwarzania JSON:", e)
 
+
+def yml_wczytaj(plik_yml):
+    yml_ok = sprawdz(plik_yml, "yml")
+    if yml_ok:
+        with open(plik_yml.name, "r") as plik:
+            tresc_yml = plik.read()
+        dane = yaml.safe_load(tresc_yml)
+        return dane
+    else:
+        return False
+        
 arg_parser = argparse.ArgumentParser(
     prog='Konwerter Konfiguracji',
     description='Konwertuje pliki konfiguracyjne w formatach xml, json i yml(yaml)')
@@ -91,10 +102,13 @@ else:
     with open(sciezka_pliku_1, "r") as plik_1:
         if typ_pliku_1 == "json":
 			obiekt_json = json_wczytaj(plik_1)
+		elif typ_pliku_1 == "yml" or typ_pliku_1 == "yaml":
+            obiekt_yml = yml_wczytaj(plik_1)
 		else:
             obiekt_json = None
+            obiekt_yml = None
     
-    if not obiekt_json:
+    if not obiekt_json and not obiekt_yml:
         print("Błąd wczytywania pliku")
         exit(1)
         
